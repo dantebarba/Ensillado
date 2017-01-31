@@ -16,7 +16,7 @@ public class JuegoEnsillado {
 
 
     public JuegoEnsillado(Nivel unNivel) {
-        estado = new Nuevo(unNivel);
+        estado = new Nuevo(unNivel, this);
     }
 
 
@@ -28,7 +28,7 @@ public class JuegoEnsillado {
         this.estado = estado;
     }
 
-    public Set<ElementosCaballo> mostrarElementos() {
+    public Set<ElementoCaballo> mostrarElementos() {
         return this.getEstado().mostrarElementos();
     }
 
@@ -36,7 +36,7 @@ public class JuegoEnsillado {
 
     }
 
-    public RespuestaIntentoEnsillado ensillar(ElementosCaballo elemento) {
+    public RespuestaIntentoEnsillado ensillar(ElementoCaballo elemento) {
         return this.getEstado().ensillar(elemento);
     }
 }

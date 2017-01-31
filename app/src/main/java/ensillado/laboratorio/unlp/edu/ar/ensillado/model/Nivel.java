@@ -15,7 +15,7 @@ public class Nivel {
     public static final int ARRAY_START = 0;
 
     private NivelEnum nivel;
-    private Set<ElementosCaballo> elementosMostrados = new HashSet<ElementosCaballo>();
+    private Set<ElementoCaballo> elementosMostrados = new HashSet<ElementoCaballo>();
     private Integer pisoDelConjunto = ARRAY_START;
 
     public Nivel(NivelEnum nivelEnum) {
@@ -25,9 +25,9 @@ public class Nivel {
     }
 
     public boolean siguienteElemento() {
-        CircularList<ElementosCaballo> list = (CircularList) Arrays.asList(ElementosCaballo.values());
+        CircularList<ElementoCaballo> list = (CircularList) Arrays.asList(ElementoCaballo.values());
         this.getElementosMostrados().add(list.get(pisoDelConjunto + 1));
-        if (ElementosCaballo.values().length > pisoDelConjunto) {
+        if (ElementoCaballo.values().length > pisoDelConjunto) {
             pisoDelConjunto++;
             return true;
         }
@@ -35,7 +35,7 @@ public class Nivel {
     }
 
     private void elementosIniciales() {
-        this.getElementosMostrados().addAll(Arrays.asList(Arrays.copyOfRange(ElementosCaballo.values(), this.pisoDelConjunto, this.getNivel().getValue())));
+        this.getElementosMostrados().addAll(Arrays.asList(Arrays.copyOfRange(ElementoCaballo.values(), this.pisoDelConjunto, this.getNivel().getValue())));
         this.pisoDelConjunto =  this.pisoDelConjunto + this.getNivel().getValue();
     }
 
@@ -45,11 +45,11 @@ public class Nivel {
      * @return
      */
     private boolean hayMasElementos() {
-        return this.pisoDelConjunto + this.getNivel().getValue() <= ElementosCaballo.getTodosLosElementos().size();
+        return this.pisoDelConjunto + this.getNivel().getValue() <= ElementoCaballo.getTodosLosElementos().size();
     }
 
 
-    public Set<ElementosCaballo> getElementosMostrados() {
+    public Set<ElementoCaballo> getElementosMostrados() {
         return elementosMostrados;
     }
 

@@ -1,5 +1,8 @@
 package ensillado.laboratorio.unlp.edu.ar.ensillado.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by CM690II on 30/01/2017.
  */
@@ -27,7 +30,7 @@ public class Finalizado extends EstadoJuego {
 
     @Override
     public void reiniciar() {
-        this.getJuego().setEstado(new Nuevo(this.getNivel()));
+        this.getJuego().setEstado(new Nuevo(this.getNivel(), this.getJuego()));
     }
 
     @Override
@@ -36,12 +39,17 @@ public class Finalizado extends EstadoJuego {
     }
 
     @Override
-    public boolean ensillar(ElementosCaballo unElemento) {
-        return false;
+    public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
+        return RespuestaIntentoEnsillado.OK;
     }
 
     @Override
     public void finalizar() {
 
+    }
+
+    @Override
+    public Set<ElementoCaballo> mostrarElementos() {
+        return new HashSet<ElementoCaballo>();
     }
 }

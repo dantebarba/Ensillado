@@ -29,6 +29,7 @@ public abstract class EstadoJuego {
         this.setCaballo(new Caballo());
     }
 
+
     private void copyContext(EstadoJuego contextoAnterior) {
         this.caballo = contextoAnterior.getCaballo();
         this.juego = contextoAnterior.getJuego();
@@ -53,7 +54,7 @@ public abstract class EstadoJuego {
         this.juego = juego;
     }
 
-    public abstract RespuestaIntentoEnsillado ensillar(ElementosCaballo unElemento);
+    public abstract RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento);
 
 
     public Caballo getCaballo() {
@@ -68,11 +69,11 @@ public abstract class EstadoJuego {
         return this.nivel;
     }
 
-    public Set<ElementosCaballo> getElementosMostrados() {
+    public Set<ElementoCaballo> getElementosMostrados() {
         return this.getNivel().getElementosMostrados();
     }
 
     public abstract void finalizar();
 
-    public abstract Set<ElementosCaballo> mostrarElementos();
+    public abstract Set<ElementoCaballo> mostrarElementos();
 }

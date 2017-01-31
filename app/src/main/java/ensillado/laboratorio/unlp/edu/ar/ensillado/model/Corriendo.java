@@ -39,7 +39,7 @@ public class Corriendo extends EstadoJuego {
     }
 
     @Override
-    public RespuestaIntentoEnsillado ensillar(ElementosCaballo unElemento) {
+    public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
         RespuestaIntentoEnsillado respuestaEnsillado = this.getCaballo().ensillar(unElemento);
         if (respuestaEnsillado.equals(RespuestaIntentoEnsillado.OK)) {
             if (this.getCaballo().estaCompleto()) {
@@ -55,7 +55,7 @@ public class Corriendo extends EstadoJuego {
     }
 
     @Override
-    public Set<ElementosCaballo> mostrarElementos() {
+    public Set<ElementoCaballo> mostrarElementos() {
         return this.getNivel().getElementosMostrados();
     }
 

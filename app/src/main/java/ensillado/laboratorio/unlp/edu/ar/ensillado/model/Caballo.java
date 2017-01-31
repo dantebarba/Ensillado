@@ -8,7 +8,7 @@ public class Caballo {
     private EstadoCaballo estadoCaballo;
 
 
-    public RespuestaIntentoEnsillado ensillar(ElementosCaballo unElemento) {
+    public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
         if (unElemento.equals(estadoCaballo.siguienteELemento())) {
             estadoCaballo.getElementosPresentes().add(unElemento);
             return RespuestaIntentoEnsillado.OK;
