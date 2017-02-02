@@ -30,7 +30,7 @@ public class Finalizado extends EstadoJuego {
 
     @Override
     public void reiniciar() {
-        this.getJuego().setEstado(new Nuevo(this.getNivel(), this.getJuego()));
+        this.getJuego().setEstado(new Nuevo(this.getJuego(), this.getJuego().getConfiguracion()));
     }
 
     @Override
@@ -40,12 +40,14 @@ public class Finalizado extends EstadoJuego {
 
     @Override
     public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
-        return RespuestaIntentoEnsillado.OK;
+        return RespuestaIntentoEnsillado.FINALIZADO;
     }
 
     @Override
     public void finalizar() {
-
+        throw new IllegalStateException("El juego ya se encuentra finalizado. Para continuar por " +
+                "favor" +
+                "reinicie el juego");
     }
 
     @Override

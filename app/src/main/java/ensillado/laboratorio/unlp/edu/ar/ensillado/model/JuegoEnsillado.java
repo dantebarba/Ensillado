@@ -1,5 +1,6 @@
 package ensillado.laboratorio.unlp.edu.ar.ensillado.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -9,14 +10,24 @@ import java.util.Set;
 public class JuegoEnsillado {
 
     private EstadoJuego estado;
+    private Configuracion configuracionActual;
 
     public JuegoEnsillado() {
 
     }
 
-
-    public JuegoEnsillado(Nivel unNivel) {
-        estado = new Nuevo(unNivel, this);
+    /**
+     * Esto será cambiado por una configuracion global de entrada. Que puede
+     * ser persistida en localstorage con JSON parsing para facilitar las
+     * cosas.
+     *
+     */
+    public JuegoEnsillado(Configuracion configuracion) {
+        if (configuracion.nivelDeJuego == null || configuracion.estadoInicial == null) {
+            throw new IllegalArgumentException("Los parametors ingresados son nulos.");
+        }
+        configuracionActual = configuracion;
+        estado = new Nuevo(this, configuracion);
     }
 
 
@@ -29,14 +40,19 @@ public class JuegoEnsillado {
     }
 
     public Set<ElementoCaballo> mostrarElementos() {
-        return this.getEstado().mostrarElementos();
+        return new HashSet<ElementoCaballo>(this.getEstado().mostrarElementos());
     }
 
     public void comenzar() {
-
+        this.getEstado().comenzar();
     }
 
     public RespuestaIntentoEnsillado ensillar(ElementoCaballo elemento) {
         return this.getEstado().ensillar(elemento);
     }
+
+    public Configuracion getConfiguracion() {
+        return this.configuracionActual;
+    }
+
 }

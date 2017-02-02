@@ -13,8 +13,9 @@ public class Nuevo extends EstadoJuego {
         super(estadoPrevio);
     }
 
-    public Nuevo(Nivel unNivel, JuegoEnsillado nuevoJuego) {
-        super(unNivel, nuevoJuego);
+    public Nuevo(JuegoEnsillado juego, Configuracion configuracion) {
+        super(new Nivel(configuracion.nivelDeJuego, configuracion.estadoInicial), juego,
+                configuracion.estadoInicial);
     }
 
     @Override
@@ -55,5 +56,11 @@ public class Nuevo extends EstadoJuego {
     @Override
     public Set<ElementoCaballo> mostrarElementos() {
         return null;
+    }
+
+
+    @Override
+    public void comenzar() {
+        this.getJuego().setEstado(new Corriendo(this));
     }
 }

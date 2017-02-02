@@ -12,7 +12,7 @@ public class GameFactory {
     private static JuegoEnsillado instance;
 
     public static void newInstance(Configuracion config) {
-        GameFactory.instance = new JuegoEnsillado(config.nivelDeJuego);
+        GameFactory.instance = new JuegoEnsillado(config);
     }
 
     public static JuegoEnsillado getInstance() {

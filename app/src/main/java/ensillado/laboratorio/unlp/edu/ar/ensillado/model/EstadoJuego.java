@@ -10,6 +10,7 @@ public abstract class EstadoJuego {
     private Nivel nivel;
     private JuegoEnsillado juego;
 
+
     /**
      * Los elementos que se muestran en la pantalla de seleccion
      */
@@ -23,10 +24,10 @@ public abstract class EstadoJuego {
         copyContext(contextoAnterior);
     }
 
-    protected EstadoJuego(Nivel unNivel, JuegoEnsillado nuevoJuego) {
+    protected EstadoJuego(Nivel unNivel, JuegoEnsillado nuevoJuego, EstadoInicial desnudo) {
         this.setJuego(nuevoJuego);
         this.nivel = unNivel;
-        this.setCaballo(new Caballo());
+        this.setCaballo(new Caballo(desnudo));
     }
 
 
@@ -76,4 +77,11 @@ public abstract class EstadoJuego {
     public abstract void finalizar();
 
     public abstract Set<ElementoCaballo> mostrarElementos();
+
+    public void comenzar() {
+    }
+
+    public void siguienteElemento() {
+        this.getNivel().siguienteElemento(this.getCaballo());
+    }
 }

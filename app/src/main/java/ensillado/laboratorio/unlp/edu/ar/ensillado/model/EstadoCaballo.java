@@ -15,8 +15,8 @@ public class EstadoCaballo {
     private Set<ElementoCaballo> elementosPresentes = new HashSet<ElementoCaballo>();
 
 
-    public EstadoCaballo() {
-        elementosPresentes.add(ElementoCaballo.NINGUNO);
+    public EstadoCaballo(EstadoInicial estadoInicial) {
+        elementosPresentes.addAll(estadoInicial.getEstadosCaballoIniciales());
     }
 
     public boolean estaCompleto() {
@@ -31,7 +31,7 @@ public class EstadoCaballo {
     }
 
     // HACER ESTE METODO.
-    public ElementoCaballo siguienteELemento() {
+    public ElementoCaballo siguienteElemento() {
         return ElementoCaballo.getSiguienteElemento(this.getElementoMayorOrden());
     }
 
@@ -49,7 +49,7 @@ public class EstadoCaballo {
         Collections.sort(elementos, new Comparator<ElementoCaballo>() {
             @Override
             public int compare(ElementoCaballo o1, ElementoCaballo o2) {
-                return new Integer(o1.getOrden()).compareTo(o2.getOrden());
+                return new Integer(o2.getOrden()).compareTo(o1.getOrden());
             }
         });
         if (!elementos.isEmpty()) {

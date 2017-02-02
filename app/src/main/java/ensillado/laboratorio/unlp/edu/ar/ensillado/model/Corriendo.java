@@ -44,6 +44,9 @@ public class Corriendo extends EstadoJuego {
         if (respuestaEnsillado.equals(RespuestaIntentoEnsillado.OK)) {
             if (this.getCaballo().estaCompleto()) {
                 this.finalizar();
+                respuestaEnsillado = RespuestaIntentoEnsillado.FINALIZADO;
+            } else {
+                this.siguienteElemento();
             }
         }
         return respuestaEnsillado;

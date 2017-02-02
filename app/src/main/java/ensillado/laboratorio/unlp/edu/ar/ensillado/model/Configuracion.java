@@ -5,7 +5,8 @@ package ensillado.laboratorio.unlp.edu.ar.ensillado.model;
  */
 public class Configuracion {
 
-    public Nivel nivelDeJuego;
+    public NivelEnum nivelDeJuego;
     private String nombreJugador;
 
+    public EstadoInicial estadoInicial;
 }
