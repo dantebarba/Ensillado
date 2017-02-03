@@ -1,5 +1,7 @@
 package ar.edu.unlp.laboratorio.ensillado.factory;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,8 +16,12 @@ public class GameFactory {
 
     private static JuegoEnsillado instance;
 
-    public static void newInstance(Configuracion config) {
-        GameFactory.instance = new JuegoEnsillado(config);
+    public static void newInstance(String config) {
+        Configuracion configuracionNueva = Configuracion.getDefaultConfiguration();
+        if (config != null) {
+            configuracionNueva = new Gson().fromJson(config, Configuracion.class);
+        }
+        GameFactory.instance = new JuegoEnsillado(configuracionNueva);
     }
 
     public static void actualizarConfiguracion(String json) {

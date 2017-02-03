@@ -10,7 +10,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     defaultConfig {
-        applicationId "ensillado.laboratorio.unlp.edu.ar.ensillado"
+        applicationId "ar.edu.unlp.laboratorio.ensillado"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -38,4 +38,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
 }
