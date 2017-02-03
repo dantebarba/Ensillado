@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ensillado.laboratorio.unlp.edu.ar.ensillado">
+    package="ar.edu.unlp.laboratorio.ar.laboratorio">
 
     <application
         android:allowBackup="true"

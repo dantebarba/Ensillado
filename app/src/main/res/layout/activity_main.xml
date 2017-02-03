@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="ensillado.laboratorio.unlp.edu.ar.ensillado.activity.MainActivity">
+    tools:context="ar.edu.unlp.laboratorio.ensillado.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
