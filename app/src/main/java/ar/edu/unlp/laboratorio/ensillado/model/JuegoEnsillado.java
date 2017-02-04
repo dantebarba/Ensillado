@@ -61,4 +61,7 @@ public class JuegoEnsillado {
         return this.configuracionActual;
     }
 
+    public ElementoCaballo getElementoPresenteMayorOrden() {
+        return this.getEstado().getCaballo().getElementoPresenteMayorOrden();
+    }
 }

@@ -1,5 +1,6 @@
 package ar.edu.unlp.laboratorio.ensillado.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -11,6 +12,10 @@ public class Caballo {
 
     public Caballo(EstadoInicial estadoInicial) {
         estadoCaballo = new EstadoCaballo(estadoInicial);
+    }
+
+    public Set<ElementoCaballo> getElementosPresentes() {
+        return new HashSet<ElementoCaballo>(this.estadoCaballo.getElementosPresentes());
     }
 
 
@@ -30,4 +35,10 @@ public class Caballo {
     public void filtrarElementosYaPresentes(Set<ElementoCaballo> elementosMostrados) {
         elementosMostrados.removeAll(this.estadoCaballo.getElementosPresentes());
     }
+
+    public ElementoCaballo getElementoPresenteMayorOrden() {
+        return ElementoCaballo.ordenarElementos(this.getElementosPresentes());
+    }
+
+
 }

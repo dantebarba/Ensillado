@@ -1,4 +1,4 @@
-package ar.edu.unlp.laboratorio.ensillado.model;
+package ar.edu.unlp.laboratorio.ar.laboratorio;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +8,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import ar.edu.unlp.laboratorio.ensillado.model.Configuracion;
+import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
+import ar.edu.unlp.laboratorio.ensillado.model.EstadoInicial;
+import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
+import ar.edu.unlp.laboratorio.ensillado.model.NivelEnum;
+import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 
 /**
  * Created by CM690II on 30/01/2017.

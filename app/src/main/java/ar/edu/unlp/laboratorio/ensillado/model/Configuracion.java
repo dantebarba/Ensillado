@@ -18,7 +18,7 @@ public class Configuracion {
         Configuracion configuracion = new Configuracion();
         configuracion.nivelDeJuego = NivelEnum.FACIL;
         configuracion.nombreJugador = "NuevoJugador";
-        configuracion.estadoInicial = EstadoInicial.DESNUDO;
+        configuracion.estadoInicial = EstadoInicial.CON_ELEMENTOS;
         return configuracion;
     }
 }

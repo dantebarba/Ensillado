@@ -1,7 +1,12 @@
 package ar.edu.unlp.laboratorio.ensillado.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by CM690II on 30/01/2017.
@@ -50,6 +55,20 @@ public enum ElementoCaballo {
             }
         }
         return ElementoCaballo.getElementoSegunOrden(0);
+    }
+
+    public static ElementoCaballo ordenarElementos(Set<ElementoCaballo> misElementos) {
+        List<ElementoCaballo> elementos = new ArrayList<ElementoCaballo>(misElementos);
+        Collections.sort(elementos, new Comparator<ElementoCaballo>() {
+            @Override
+            public int compare(ElementoCaballo o1, ElementoCaballo o2) {
+                return new Integer(o2.getOrden()).compareTo(o1.getOrden());
+            }
+        });
+        if (!elementos.isEmpty()) {
+            return elementos.get(0);
+        }
+        return ElementoCaballo.NINGUNO;
     }
 
 

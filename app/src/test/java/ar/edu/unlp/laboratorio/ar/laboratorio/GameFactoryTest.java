@@ -1,4 +1,4 @@
-package ar.edu.unlp.laboratorio.ensillado.factory;
+package ar.edu.unlp.laboratorio.ar.laboratorio;
 
 /**
  * Created by CM690II on 30/01/2017.
