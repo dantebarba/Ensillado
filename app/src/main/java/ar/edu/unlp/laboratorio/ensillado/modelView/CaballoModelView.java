@@ -19,9 +19,6 @@ public class CaballoModelView {
     public static int caballoSudadera = R.drawable.caballosudadera;
     ImageView bindedImageResource;
 
-
-    public int estadoActual = caballoNinguno;
-
     public CaballoModelView(ImageView image) {
         this.bindedImageResource = image;
     }

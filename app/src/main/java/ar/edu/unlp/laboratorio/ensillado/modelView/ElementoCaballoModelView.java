@@ -5,9 +5,11 @@ package ar.edu.unlp.laboratorio.ensillado.modelView;
  */
 
 import android.icu.util.RangeValueIterator;
+import android.view.View;
 import android.widget.ImageView;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
+import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 
 /**
@@ -21,9 +23,14 @@ public class ElementoCaballoModelView {
     public static int BOZAL = R.drawable.bozal;
     public static int MONTURA = R.drawable.montura;
     public static int SUDADERA = R.drawable.sudadera;
-
-    public ImageView imagenActual;
+    public ImageView bindedResource;
     public ElementoCaballo elementoActual;
+
+    public ElementoCaballoModelView(ImageView viewById) {
+        if (viewById != null) {
+            this.bindedResource = viewById;
+        }
+    }
 
 
     public void render(Renderizable renderObject) {
@@ -31,8 +38,8 @@ public class ElementoCaballoModelView {
     }
 
     public void bind(int elemento) {
-        if (imagenActual != null) {
-            imagenActual.setImageResource(elemento);
+        if (bindedResource != null) {
+            bindedResource.setImageResource(elemento);
         }
     }
 

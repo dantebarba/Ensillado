@@ -1,5 +1,7 @@
 package ar.edu.unlp.laboratorio.ensillado.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.Configuracion;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
+import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementoCaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
@@ -52,20 +55,56 @@ public class MainActivity extends AppCompatActivity {
         GameFactory.getInstance().comenzar();
         this.caballoModelView = new CaballoModelView((ImageView) findViewById(R.id
                 .imagen_caballo));
-        this.elementoMostradoView = new ElementoCaballoModelView(new ImageView());
+        ImageView elementoMostradoImagen = (ImageView) findViewById(R.id
+                .elemento_mostrado);
+        this.elementoMostradoView = new ElementoCaballoModelView(elementoMostradoImagen);
+        elementoMostradoImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
+                        (elementoMostradoView.elementoActual);
+                procesarRespuestaDeJuego(respuesta);
+
+            }
+        });
+
         actualizarCaballo(GameFactory.getInstance());
         actualizarElementosMostrados(GameFactory.getInstance());
     }
 
-    private void actualizarElementosMostrados(JuegoEnsillado juego) {
+    private void procesarRespuestaDeJuego(RespuestaIntentoEnsillado respuesta) {
+        if (respuesta.equals(RespuestaIntentoEnsillado.OK)) {
+            actualizarElementosMostrados(GameFactory.getInstance());
+            actualizarCaballo(GameFactory.getInstance());
+        }
+        if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_INCORRECTO)) {
+            mostrarMensaje("El elemento ingresado no es correcto. Intente nuevamente.");
+        }
+        if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_PRESENTE)) {
+            mostrarMensaje("El elemento ingresado ya se encuentra presente en el caballo.");
+        }
+        if (respuesta.equals(RespuestaIntentoEnsillado.FINALIZADO)) {
+            mostrarMensaje("Used ya ha ganado!. Para volver a jugar reinicie el juego.");
+            actualizarCaballo(GameFactory.getInstance());
+        }
+    }
+
+    public void actualizarElementosMostrados(JuegoEnsillado juego) {
         Set<ElementoCaballo> elementos = juego.mostrarElementos();
         for (ElementoCaballo elemento : elementos) {
             innerRender(elemento);
         }
     }
 
-    private void innerRender(final ElementoCaballo elemento) {
-        this.elementoMostradoView.render(new Renderizable() {
+    public void reiniciarJuego() {
+        GameFactory.getInstance().reiniciar();
+        GameFactory.getInstance().comenzar();
+        this.actualizarCaballo(GameFactory.getInstance());
+        this.actualizarElementosMostrados(GameFactory.getInstance());
+    }
+
+    public void innerRender(final ElementoCaballo elemento) {
+        elementoMostradoView.render(new Renderizable() {
             @Override
             public void render() {
                 switch (elemento) {
@@ -158,4 +197,26 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void mostrarMensaje(String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("Mensaje del juego");
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ACEPTAR",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "REINICIAR", new DialogInterface
+                .OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                reiniciarJuego();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
 }

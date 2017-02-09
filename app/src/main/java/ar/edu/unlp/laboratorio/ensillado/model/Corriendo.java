@@ -34,12 +34,10 @@ public class Corriendo extends EstadoJuego {
     }
 
     @Override
-    public void cambiarNivel(Nivel unNuevoNivel) {
-
-    }
-
-    @Override
     public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
+        if (unElemento == null) {
+            throw new IllegalArgumentException("El elemento ingresado es nulo");
+        }
         RespuestaIntentoEnsillado respuestaEnsillado = this.getCaballo().ensillar(unElemento);
         if (respuestaEnsillado.equals(RespuestaIntentoEnsillado.OK)) {
             if (this.getCaballo().estaCompleto()) {

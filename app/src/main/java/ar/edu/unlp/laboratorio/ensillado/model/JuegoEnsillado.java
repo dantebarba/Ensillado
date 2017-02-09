@@ -64,4 +64,8 @@ public class JuegoEnsillado {
     public ElementoCaballo getElementoPresenteMayorOrden() {
         return this.getEstado().getCaballo().getElementoPresenteMayorOrden();
     }
+
+    public void reiniciar() {
+        this.getEstado().reiniciar();
+    }
 }

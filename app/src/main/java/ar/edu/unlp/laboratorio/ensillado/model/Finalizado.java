@@ -34,11 +34,6 @@ public class Finalizado extends EstadoJuego {
     }
 
     @Override
-    public void cambiarNivel(Nivel unNuevoNivel) {
-
-    }
-
-    @Override
     public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
         return RespuestaIntentoEnsillado.FINALIZADO;
     }

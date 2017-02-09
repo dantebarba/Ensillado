@@ -1,5 +1,6 @@
 package ar.edu.unlp.laboratorio.ensillado.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,11 +40,6 @@ public class Nuevo extends EstadoJuego {
     }
 
     @Override
-    public void cambiarNivel(Nivel unNuevoNivel) {
-
-    }
-
-    @Override
     public RespuestaIntentoEnsillado ensillar(ElementoCaballo unElemento) {
         return RespuestaIntentoEnsillado.ELEMENTO_INCORRECTO;
     }
@@ -55,7 +51,8 @@ public class Nuevo extends EstadoJuego {
 
     @Override
     public Set<ElementoCaballo> mostrarElementos() {
-        return null;
+        throw new IllegalStateException("No se pueden mostrar elementos si aun no se ha comenzado el " +
+                "juego. Comience el juego primero");
     }
 
 

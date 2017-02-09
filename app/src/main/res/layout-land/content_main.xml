@@ -14,29 +14,25 @@
                 tools:showIn="@layout/activity_main">
 
     <ImageView
+        android:src="@drawable/ninguno"
         android:id="@+id/imagen_caballo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="119dp"
-        android:layout_toEndOf="@+id/textView"
-        android:adjustViewBounds="true"
         android:cropToPadding="false"
-        android:scaleType="center"
-        app:srcCompat="@android:drawable/screen_background_dark"/>
+        android:layout_width="512dp"
+        android:layout_height="350dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"/>
 
     <ImageView
+        android:src="@drawable/cabezada"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:id="@+id/elemento_mostrado"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="119dp"
-        android:layout_toEndOf="@+id/textView"
-        android:adjustViewBounds="true"
-        android:cropToPadding="false"
-        android:scaleType="center"
-        app:srcCompat="@android:drawable/screen_background_dark"></ImageView>
+        android:layout_marginStart="33dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

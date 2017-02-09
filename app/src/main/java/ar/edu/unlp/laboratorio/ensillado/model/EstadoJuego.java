@@ -45,8 +45,6 @@ public abstract class EstadoJuego {
 
     public abstract void reiniciar();
 
-    public abstract void cambiarNivel(Nivel unNuevoNivel);
-
     public JuegoEnsillado getJuego() {
         return juego;
     }
