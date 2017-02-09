@@ -7,6 +7,11 @@ import com.google.gson.GsonBuilder;
 
 import ar.edu.unlp.laboratorio.ensillado.model.Configuracion;
 import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
+import gov.senasa.autenticacion.webservices.FalloElServicioException_Exception;
+import gov.senasa.autenticacion.webservices.LoginConUsuarioYPassword;
+import gov.senasa.autenticacion.webservices.RespuestaLogin;
+import gov.senasa.autenticacion.webservices.UsuarioPasswordInvalidoException_Exception;
+import gov.senasa.autenticacion.webservices.provider.ServicioAutenticacionProvider;
 
 /**
  * Created by CM690II on 30/01/2017.
@@ -27,10 +32,6 @@ public class GameFactory {
     public static void actualizarConfiguracion(String json) {
         Configuracion configuracionNueva = new Gson().fromJson(json, Configuracion.class);
         getInstance().setConfiguracionActual(configuracionNueva);
-    }
-
-    public void hola() {
-
     }
 
     public static String guardarConfiguracion() {

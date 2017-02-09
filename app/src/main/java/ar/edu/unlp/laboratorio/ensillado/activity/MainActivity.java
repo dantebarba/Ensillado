@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
@@ -23,12 +25,13 @@ import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementoCaballoModelView;
+import ar.edu.unlp.laboratorio.ensillado.modelView.ElementosMostradosModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
 
 public class MainActivity extends AppCompatActivity {
 
     CaballoModelView caballoModelView;
-    ElementoCaballoModelView elementoMostradoView;
+    ElementosMostradosModelView<ElementoCaballoModelView> elementoMostradoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +56,38 @@ public class MainActivity extends AppCompatActivity {
         String configuracionJson = settings.getString(Configuracion.PREFS_KEY, null);
         GameFactory.newInstance(configuracionJson);
         GameFactory.getInstance().comenzar();
+        this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos();
         this.caballoModelView = new CaballoModelView((ImageView) findViewById(R.id
                 .imagen_caballo));
         ImageView elementoMostradoImagen = (ImageView) findViewById(R.id
                 .elemento_mostrado);
-        this.elementoMostradoView = new ElementoCaballoModelView(elementoMostradoImagen);
-        elementoMostradoImagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
-                        (elementoMostradoView.elementoActual);
-                procesarRespuestaDeJuego(respuesta);
+        List<ImageView> elementosMostrados = new ArrayList<>();
 
-            }
-        });
+
+        this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos(getElementosMostradosImageView(elementosMostrados);
+        );
+
 
         actualizarCaballo(GameFactory.getInstance());
         actualizarElementosMostrados(GameFactory.getInstance());
+    }
+
+    private List<ImageView> getElementosMostradosImageView(List<ImageView> elementosMostrados) {
+        ImageView elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado);
+        elementosMostrados.add(elementoMostrado);
+        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado2);
+        elementosMostrados.add(elementoMostrado);
+
+        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado3);
+        elementosMostrados.add(elementoMostrado);
+
+        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado4);
+        elementosMostrados.add(elementoMostrado);
+
+        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado5);
+        elementosMostrados.add(elementoMostrado);
+
+        return elementosMostrados;
     }
 
     private void procesarRespuestaDeJuego(RespuestaIntentoEnsillado respuesta) {
@@ -91,9 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void actualizarElementosMostrados(JuegoEnsillado juego) {
         Set<ElementoCaballo> elementos = juego.mostrarElementos();
-        for (ElementoCaballo elemento : elementos) {
-            innerRender(elemento);
-        }
     }
 
     public void reiniciarJuego() {
@@ -103,42 +118,8 @@ public class MainActivity extends AppCompatActivity {
         this.actualizarElementosMostrados(GameFactory.getInstance());
     }
 
-    public void innerRender(final ElementoCaballo elemento) {
-        elementoMostradoView.render(new Renderizable() {
-            @Override
-            public void render() {
-                switch (elemento) {
-                    case NINGUNO:
-                        elementoMostradoView.bind(CaballoModelView.caballoNinguno);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.NINGUNO);
-                        break;
-                    case CABEZADA:
-                        elementoMostradoView.bind(ElementoCaballoModelView.CABEZADA);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.CABEZADA);
-                        break;
-                    case BOZAL:
-                        elementoMostradoView.bind(ElementoCaballoModelView.BOZAL);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.BOZAL);
-                        break;
-                    case SUDADERA:
-                        elementoMostradoView.bind(ElementoCaballoModelView.SUDADERA);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.SUDADERA);
-                        break;
-                    case MATRA:
-                        elementoMostradoView.bind(ElementoCaballoModelView.MATRA);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.MATRA);
-                        break;
-                    case BAJO_MONTURA:
-                        elementoMostradoView.bind(ElementoCaballoModelView.BAJO_MONTURA);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.BAJO_MONTURA);
-                        break;
-                    case MONTURA_ESTRIBOS:
-                        elementoMostradoView.bind(ElementoCaballoModelView.MONTURA);
-                        elementoMostradoView.setElementoActual(ElementoCaballo.MONTURA_ESTRIBOS);
-                        break;
-                }
-            }
-        });
+    public void innerRender(final Set<ElementoCaballo> elemento) {
+        this.elementoMostradoView.renderAll(elemento);
     }
 
     private void actualizarCaballo(final JuegoEnsillado juego) {

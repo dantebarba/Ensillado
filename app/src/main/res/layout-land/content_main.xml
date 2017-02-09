@@ -14,18 +14,6 @@
                 tools:showIn="@layout/activity_main">
 
     <ImageView
-        android:src="@drawable/ninguno"
-        android:id="@+id/imagen_caballo"
-        android:cropToPadding="false"
-        android:layout_width="512dp"
-        android:layout_height="350dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="false"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"/>
-
-    <ImageView
         android:src="@drawable/cabezada"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -34,5 +22,67 @@
         android:layout_marginStart="33dp"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/screen_background_light_transparent"
+        android:id="@+id/elemento_mostrado5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/elemento_mostrado"
+        android:layout_marginBottom="81dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/screen_background_light_transparent"
+        android:id="@+id/elemento_mostrado2"
+        android:adjustViewBounds="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/elemento_mostrado"
+        android:layout_marginTop="80dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/screen_background_light_transparent"
+        android:id="@+id/imageView6"
+        android:layout_alignTop="@+id/elemento_mostrado5"
+        android:layout_alignStart="@+id/elemento_mostrado4" />
+
+    <ImageView
+        android:src="@drawable/ninguno"
+        android:id="@+id/imagen_caballo"
+        android:cropToPadding="false"
+        android:layout_width="512dp"
+        android:layout_height="350dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="false"
+        android:layout_weight="1"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/elemento_mostrado"
+        android:layout_marginStart="163dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/screen_background_light_transparent"
+        android:id="@+id/elemento_mostrado4"
+        android:layout_alignTop="@+id/elemento_mostrado"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="115dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@android:drawable/screen_background_light_transparent"
+        android:id="@+id/elemento_mostrado3"
+        android:layout_alignTop="@+id/elemento_mostrado2"
+        android:layout_alignStart="@+id/elemento_mostrado4" />
 
 </RelativeLayout>
