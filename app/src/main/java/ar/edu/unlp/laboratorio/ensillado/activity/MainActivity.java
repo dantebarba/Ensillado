@@ -1,9 +1,14 @@
 package ar.edu.unlp.laboratorio.ensillado.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     CaballoModelView caballoModelView;
     ElementosMostradosModelView elementoMostradoView;
+    MediaPlayer myPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        myPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        myPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.reset();
             }
         });
         this.inicializarJuego();
@@ -91,13 +105,17 @@ public class MainActivity extends AppCompatActivity {
             actualizarCaballo(GameFactory.getInstance());
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_INCORRECTO)) {
-            mostrarMensaje("El elemento ingresado no es correcto. Intente nuevamente.");
+            tocarAudio(R.raw.resoplido);
+            mostrarMensajeInformativo("El elemento ingresado no es correcto. Intente nuevamente.");
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_PRESENTE)) {
-            mostrarMensaje("El elemento ingresado ya se encuentra presente en el caballo.");
+            tocarAudio(R.raw.resoplido);
+            mostrarMensajeInformativo("El elemento ingresado ya se encuentra presente en el caballo.");
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.FINALIZADO)) {
-            mostrarMensaje("Felicitaciones!, ha ganado!. Para volver a jugar haga click en reiniciar.");
+            tocarAudio(R.raw.relincho);
+            mostrarMensajeFinalizado("Felicitaciones!, ha ganado!. Para volver a jugar haga click en " +
+                    "reiniciar.");
             actualizarCaballo(GameFactory.getInstance());
         }
     }
@@ -108,12 +126,12 @@ public class MainActivity extends AppCompatActivity {
         elementoMostradoView.render(new Renderizable() {
             @Override
             public void render() {
-                ElementoCaballo[] elementosArray = elementos.toArray(new ElementoCaballo[elementos.size()]);
+                ElementoCaballo[] elementosArray = elementos.toArray(new
+                        ElementoCaballo[elementos.size()]);
                 elementoMostradoView.bind(elementosArray);
             }
         });
     }
-
 
 
     public void reiniciarJuego() {
@@ -181,11 +199,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void mostrarMensaje(String message) {
+    public void mostrarMensajeFinalizado(String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle("Mensaje del juego");
         alertDialog.setMessage(message);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ACEPTAR",
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "SIGUIENTE NIVEL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -200,6 +218,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    public void mostrarMensajeInformativo(String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("Mensaje del juego");
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CONTINUAR",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void vibrar(int miliseconds) {
+        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(miliseconds);
+    }
+
+    public void tocarAudio(int audioResource) {
+        try {
+            // FIXME LA UNICA FORMA QUE ECONTRE PARA HACER
+            // QUE REPRODUZCA DOS SONIDOS A LA VEZ CONSECUTIVOS.
+            while (myPlayer.isPlaying()) {
+            }
+            myPlayer.reset();
+            myPlayer.setDataSource(this, Uri.parse("android.resource://ar.edu.unlp" +
+                    ".laboratorio.ensillado/" + audioResource));
+            myPlayer.prepare();
+            myPlayer.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

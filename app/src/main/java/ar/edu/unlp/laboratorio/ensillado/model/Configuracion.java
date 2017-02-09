@@ -19,6 +19,7 @@ public class Configuracion {
         configuracion.nivelDeJuego = NivelEnum.EXPERTO;
         configuracion.nombreJugador = "NuevoJugador";
         configuracion.estadoInicial = EstadoInicial.DESNUDO;
+        configuracion.voz = AudioSet.FEMENINO;
         return configuracion;
     }
 }

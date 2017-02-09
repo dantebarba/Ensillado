@@ -47,14 +47,21 @@ public class ElementosMostradosModelView {
                 // SI LA IMAGEN ESTA HABILITADA/CARGADA, entonces ES VALIDA, y TIENE CONTENIDO
                 // ENVIAMOS EL ELEMENTOCABALLO CORRESPONDIENTE A LA IMAGEN POR PARAMETRO
                 if (aResource != null && aResource.isEnabled()) {
-                    RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
-                            (bindedResources.get(aResource).getElementoActual());
-                    context.procesarRespuestaDeJuego(respuesta);
+                    context.vibrar(500);
+                    // este codigo es común para arrastre también.
+                    handlerElementoCaballoSelection(aResource);
                 }
 
 
             }
         });
+    }
+
+    private void handlerElementoCaballoSelection(ImageView aResource) {
+        context.tocarAudio(bindedResources.get(aResource).getAudioResource());
+        RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
+                (bindedResources.get(aResource).getElementoActual());
+        context.procesarRespuestaDeJuego(respuesta);
     }
 
     public void bind(ElementoCaballo[] elementosArray) {

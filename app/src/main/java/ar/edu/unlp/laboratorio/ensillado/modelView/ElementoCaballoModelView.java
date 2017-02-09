@@ -7,6 +7,8 @@ package ar.edu.unlp.laboratorio.ensillado.modelView;
 import android.widget.ImageView;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
+import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
+import ar.edu.unlp.laboratorio.ensillado.model.AudioSet;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 
 /**
@@ -86,5 +88,44 @@ public class ElementoCaballoModelView {
 
     public ElementoCaballo getElementoActual() {
         return elementoActual;
+    }
+
+    public int getAudioResource() {
+        switch (elementoActual) {
+
+            case NINGUNO:
+                return -1;
+            case CABEZADA:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.cabezadamasc;
+                }
+                return R.raw.cabezadafem;
+            case BOZAL:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.bozalmasc;
+                }
+                return R.raw.bozalfem;
+            case SUDADERA:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.sudaderamasc;
+                }
+                return R.raw.sudaderafem;
+            case MATRA:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.matramasc;
+                }
+                return R.raw.matrafem;
+            case BAJO_MONTURA:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.bajomonturamasc;
+                }
+                return R.raw.bajomonturafem;
+            case MONTURA_ESTRIBOS:
+                if (GameFactory.getInstance().getConfiguracion().voz.equals(AudioSet.MASCULINO)) {
+                    return R.raw.monturamasc;
+                }
+                return R.raw.monturafem;
+        }
+        return -1;
     }
 }
