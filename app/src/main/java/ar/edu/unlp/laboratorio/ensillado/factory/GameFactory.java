@@ -29,6 +29,10 @@ public class GameFactory {
         getInstance().setConfiguracionActual(configuracionNueva);
     }
 
+    public void hola() {
+
+    }
+
     public static String guardarConfiguracion() {
         Gson gson = new GsonBuilder().create();
         return gson.toJson(getInstance().getConfiguracion());
