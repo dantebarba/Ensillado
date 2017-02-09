@@ -24,14 +24,13 @@ import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
-import ar.edu.unlp.laboratorio.ensillado.modelView.ElementoCaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementosMostradosModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
 
 public class MainActivity extends AppCompatActivity {
 
     CaballoModelView caballoModelView;
-    ElementosMostradosModelView<ElementoCaballoModelView> elementoMostradoView;
+    ElementosMostradosModelView elementoMostradoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,23 +55,16 @@ public class MainActivity extends AppCompatActivity {
         String configuracionJson = settings.getString(Configuracion.PREFS_KEY, null);
         GameFactory.newInstance(configuracionJson);
         GameFactory.getInstance().comenzar();
-        this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos();
         this.caballoModelView = new CaballoModelView((ImageView) findViewById(R.id
                 .imagen_caballo));
-        ImageView elementoMostradoImagen = (ImageView) findViewById(R.id
-                .elemento_mostrado);
-        List<ImageView> elementosMostrados = new ArrayList<>();
-
-
-        this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos(getElementosMostradosImageView(elementosMostrados);
-        );
-
-
+        this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos(this,
+                getElementosMostradosImageView());
         actualizarCaballo(GameFactory.getInstance());
         actualizarElementosMostrados(GameFactory.getInstance());
     }
 
-    private List<ImageView> getElementosMostradosImageView(List<ImageView> elementosMostrados) {
+    private List<ImageView> getElementosMostradosImageView() {
+        List<ImageView> elementosMostrados = new ArrayList<>();
         ImageView elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado);
         elementosMostrados.add(elementoMostrado);
         elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado2);
@@ -87,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
         elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado5);
         elementosMostrados.add(elementoMostrado);
 
+        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado6);
+        elementosMostrados.add(elementoMostrado);
+
         return elementosMostrados;
     }
 
-    private void procesarRespuestaDeJuego(RespuestaIntentoEnsillado respuesta) {
+    public void procesarRespuestaDeJuego(RespuestaIntentoEnsillado respuesta) {
         if (respuesta.equals(RespuestaIntentoEnsillado.OK)) {
             actualizarElementosMostrados(GameFactory.getInstance());
             actualizarCaballo(GameFactory.getInstance());
@@ -102,14 +97,24 @@ public class MainActivity extends AppCompatActivity {
             mostrarMensaje("El elemento ingresado ya se encuentra presente en el caballo.");
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.FINALIZADO)) {
-            mostrarMensaje("Used ya ha ganado!. Para volver a jugar reinicie el juego.");
+            mostrarMensaje("Felicitaciones!, ha ganado!. Para volver a jugar haga click en reiniciar.");
             actualizarCaballo(GameFactory.getInstance());
         }
     }
 
     public void actualizarElementosMostrados(JuegoEnsillado juego) {
-        Set<ElementoCaballo> elementos = juego.mostrarElementos();
+        elementoMostradoView.reset();
+        final Set<ElementoCaballo> elementos = juego.mostrarElementos();
+        elementoMostradoView.render(new Renderizable() {
+            @Override
+            public void render() {
+                ElementoCaballo[] elementosArray = elementos.toArray(new ElementoCaballo[elementos.size()]);
+                elementoMostradoView.bind(elementosArray);
+            }
+        });
     }
+
+
 
     public void reiniciarJuego() {
         GameFactory.getInstance().reiniciar();
@@ -118,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
         this.actualizarElementosMostrados(GameFactory.getInstance());
     }
 
-    public void innerRender(final Set<ElementoCaballo> elemento) {
-        this.elementoMostradoView.renderAll(elemento);
-    }
 
     private void actualizarCaballo(final JuegoEnsillado juego) {
 

@@ -16,7 +16,7 @@ public class Configuracion {
 
     public static Configuracion getDefaultConfiguration() {
         Configuracion configuracion = new Configuracion();
-        configuracion.nivelDeJuego = NivelEnum.FACIL;
+        configuracion.nivelDeJuego = NivelEnum.EXPERTO;
         configuracion.nombreJugador = "NuevoJugador";
         configuracion.estadoInicial = EstadoInicial.DESNUDO;
         return configuracion;

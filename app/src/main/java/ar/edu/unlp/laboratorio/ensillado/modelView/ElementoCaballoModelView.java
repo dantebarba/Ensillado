@@ -4,12 +4,9 @@ package ar.edu.unlp.laboratorio.ensillado.modelView;
  * Created by CM690II on 03/02/2017.
  */
 
-import android.icu.util.RangeValueIterator;
-import android.view.View;
 import android.widget.ImageView;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
-import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 
 /**
@@ -29,6 +26,10 @@ public class ElementoCaballoModelView {
     public ElementoCaballoModelView(ImageView viewById) {
         if (viewById != null) {
             this.bindedResource = viewById;
+            this.bindedResource.setImageResource(android.R.drawable
+                    .screen_background_light_transparent);
+            this.bindedResource.setEnabled(false);
+            this.elementoActual = ElementoCaballo.NINGUNO;
         }
     }
 
@@ -37,13 +38,53 @@ public class ElementoCaballoModelView {
         renderObject.render();
     }
 
-    public void bind(int elemento) {
-        if (bindedResource != null) {
-            bindedResource.setImageResource(elemento);
+    /**
+     * Asocia el recurso gráfico con el recurso lógico. En este
+     * caso asocia una ImageView con un ElementoCaballo.
+     *
+     * @param elemento
+     */
+    public void bind(ElementoCaballo elemento) {
+        if (bindedResource != null && elemento != null) {
+            this.setImageResource(elemento);
+            this.bindedResource.setEnabled(true);
+            this.setElementoActual(elemento);
+        }
+    }
+
+    private void setImageResource(ElementoCaballo elemento) {
+        switch (elemento) {
+
+            case NINGUNO:
+                bindedResource.setImageResource(android.R.drawable
+                        .screen_background_light_transparent);
+                break;
+            case CABEZADA:
+                bindedResource.setImageResource(R.drawable.cabezada);
+                break;
+            case BOZAL:
+                bindedResource.setImageResource(R.drawable.bozal);
+                break;
+            case SUDADERA:
+                bindedResource.setImageResource(R.drawable.sudadera);
+                break;
+            case MATRA:
+                bindedResource.setImageResource(R.drawable.matra);
+                break;
+            case BAJO_MONTURA:
+                bindedResource.setImageResource(R.drawable.bajomontura);
+                break;
+            case MONTURA_ESTRIBOS:
+                bindedResource.setImageResource(R.drawable.montura);
+                break;
         }
     }
 
     public void setElementoActual(ElementoCaballo elementoActual) {
         this.elementoActual = elementoActual;
+    }
+
+    public ElementoCaballo getElementoActual() {
+        return elementoActual;
     }
 }

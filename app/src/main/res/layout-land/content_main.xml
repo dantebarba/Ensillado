@@ -14,7 +14,7 @@
                 tools:showIn="@layout/activity_main">
 
     <ImageView
-        android:src="@drawable/cabezada"
+        android:src="@android:drawable/screen_background_light_transparent"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitXY"
@@ -49,7 +49,7 @@
         android:layout_height="100dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
-        android:id="@+id/imageView6"
+        android:id="@+id/elemento_mostrado6"
         android:layout_alignTop="@+id/elemento_mostrado5"
         android:layout_alignStart="@+id/elemento_mostrado4" />
 
