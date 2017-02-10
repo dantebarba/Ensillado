@@ -68,4 +68,8 @@ public class JuegoEnsillado {
     public void reiniciar() {
         this.getEstado().reiniciar();
     }
+
+    public void finalizar() {
+        this.getEstado().finalizar();
+    }
 }

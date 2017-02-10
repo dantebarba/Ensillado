@@ -16,10 +16,10 @@ public class Configuracion {
 
     public static Configuracion getDefaultConfiguration() {
         Configuracion configuracion = new Configuracion();
-        configuracion.nivelDeJuego = NivelEnum.EXPERTO;
+        configuracion.nivelDeJuego = NivelEnum.FACIL;
         configuracion.nombreJugador = "NuevoJugador";
         configuracion.estadoInicial = EstadoInicial.DESNUDO;
-        configuracion.voz = AudioSet.FEMENINO;
+        configuracion.voz = AudioSet.MASCULINO;
         return configuracion;
     }
 }

@@ -14,10 +14,10 @@ public class GameFactory {
 
     private static JuegoEnsillado instance;
 
-    public static void newInstance(String config) {
+    public static void newInstance(Configuracion config) {
         Configuracion configuracionNueva = Configuracion.getDefaultConfiguration();
         if (config != null) {
-            configuracionNueva = new Gson().fromJson(config, Configuracion.class);
+            configuracionNueva = config;
         }
         GameFactory.instance = new JuegoEnsillado(configuracionNueva);
     }

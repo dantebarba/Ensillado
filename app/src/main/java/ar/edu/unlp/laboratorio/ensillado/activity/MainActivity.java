@@ -10,12 +10,12 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,19 +27,23 @@ import java.util.Set;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
 import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
+import ar.edu.unlp.laboratorio.ensillado.model.AudioSet;
 import ar.edu.unlp.laboratorio.ensillado.model.Configuracion;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
+import ar.edu.unlp.laboratorio.ensillado.model.EstadoInicial;
 import ar.edu.unlp.laboratorio.ensillado.model.JuegoEnsillado;
+import ar.edu.unlp.laboratorio.ensillado.model.NivelEnum;
 import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementosMostradosModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     CaballoModelView caballoModelView;
     ElementosMostradosModelView elementoMostradoView;
     MediaPlayer myPlayer = new MediaPlayer();
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +71,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inicializarJuego() {
-        SharedPreferences settings = getSharedPreferences(Configuracion.PREFS_NAME, 0);
-        String configuracionJson = settings.getString(Configuracion.PREFS_KEY, null);
-        GameFactory.newInstance(configuracionJson);
+        cargarConfiguracion();
         GameFactory.getInstance().comenzar();
         this.caballoModelView = new CaballoModelView(this, (ImageView) findViewById(R.id
                 .imagen_caballo));
@@ -77,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
                 getElementosMostradosImageView());
         actualizarCaballo(GameFactory.getInstance());
         actualizarElementosMostrados(GameFactory.getInstance());
+    }
+
+    private void cargarConfiguracion() {
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        Configuracion configuracion = Configuracion.getDefaultConfiguration();
+        if (prefs != null) {
+            configuracion.nivelDeJuego = NivelEnum.fromString(prefs.getString("nivel", "FACIL"));
+            configuracion.estadoInicial = EstadoInicial.fromString(prefs.getString("estado_inicial", "DESNUDO"));
+            configuracion.voz = AudioSet.fromString(prefs.getString("voz", "MASCULINO"));
+        }
+        GameFactory.newInstance(configuracion);
     }
 
     private List<ImageView> getElementosMostradosImageView() {
@@ -137,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void reiniciarJuego() {
+        this.cargarConfiguracion();
         GameFactory.getInstance().reiniciar();
         GameFactory.getInstance().comenzar();
         this.actualizarCaballo(GameFactory.getInstance());
@@ -204,7 +219,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
 
-
     }
 
     public void mostrarMensajeFinalizado(String message) {
@@ -214,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "SIGUIENTE NIVEL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        GameFactory.getInstance().getConfiguracion().nivelDeJuego = GameFactory.getInstance().getConfiguracion().nivelDeJuego.siguienteNivel();
+                        reiniciarJuego();
                         dialog.dismiss();
                     }
                 });
@@ -264,4 +280,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        GameFactory.getInstance().finalizar();
+        reiniciarJuego();
+    }
 }

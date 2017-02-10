@@ -7,4 +7,16 @@ public enum AudioSet {
     FEMENINO, MASCULINO;
 
 
+    public static AudioSet fromString(String string) {
+        if (string != null) {
+            for (AudioSet est : AudioSet
+                    .values()) {
+                if (est.toString().equals(string)) {
+                    return est;
+                }
+            }
+        }
+        return null;
+    }
+
 }
