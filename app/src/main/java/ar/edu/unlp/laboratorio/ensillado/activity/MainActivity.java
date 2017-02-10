@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         String configuracionJson = settings.getString(Configuracion.PREFS_KEY, null);
         GameFactory.newInstance(configuracionJson);
         GameFactory.getInstance().comenzar();
-        this.caballoModelView = new CaballoModelView((ImageView) findViewById(R.id
+        this.caballoModelView = new CaballoModelView(this, (ImageView) findViewById(R.id
                 .imagen_caballo));
         this.elementoMostradoView = ElementosMostradosModelView.nuevaPantallaDeElementos(this,
                 getElementosMostradosImageView());
@@ -254,5 +254,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
 }

@@ -1,5 +1,6 @@
 package ar.edu.unlp.laboratorio.ensillado.modelView;
 
+import android.content.ClipData;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,6 +23,8 @@ public class ElementosMostradosModelView {
     public Map<ImageView, ElementoCaballoModelView> bindedResources = new HashMap<ImageView,
             ElementoCaballoModelView>();
 
+    public static ElementoCaballoModelView elementoArrastradoActualmente;
+
     public static ElementosMostradosModelView nuevaPantallaDeElementos
             (MainActivity mainActivity, List<ImageView> resources) {
         ElementosMostradosModelView elementosMostrados = new
@@ -40,6 +43,16 @@ public class ElementosMostradosModelView {
     }
 
     private void assignHandler(final ImageView aResource) {
+        aResource.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View view) {
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                        view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                ElementosMostradosModelView.elementoArrastradoActualmente = bindedResources.get(aResource);
+                return true;
+            }
+        });
         aResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +62,7 @@ public class ElementosMostradosModelView {
                 if (aResource != null && aResource.isEnabled()) {
                     context.vibrar(500);
                     // este codigo es común para arrastre también.
-                    handlerElementoCaballoSelection(aResource);
+                    handlerElementoCaballoSelection(context, bindedResources.get(aResource));
                 }
 
 
@@ -57,11 +70,12 @@ public class ElementosMostradosModelView {
         });
     }
 
-    private void handlerElementoCaballoSelection(ImageView aResource) {
-        context.tocarAudio(bindedResources.get(aResource).getAudioResource());
+    public static RespuestaIntentoEnsillado handlerElementoCaballoSelection(MainActivity context, ElementoCaballoModelView resource) {
+        context.tocarAudio(resource.getAudioResource());
         RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
-                (bindedResources.get(aResource).getElementoActual());
+                (resource.getElementoActual());
         context.procesarRespuestaDeJuego(respuesta);
+        return respuesta;
     }
 
     public void bind(ElementoCaballo[] elementosArray) {
