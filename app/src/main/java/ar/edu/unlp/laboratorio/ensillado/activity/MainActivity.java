@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             configuracion.voz = AudioSet.fromString(prefs.getString("voz", "MASCULINO"));
         }
         GameFactory.newInstance(configuracion);
+        setTitle("Ensillado: Nivel " + configuracion.nivelDeJuego);
     }
 
     private List<ImageView> getElementosMostradosImageView() {
