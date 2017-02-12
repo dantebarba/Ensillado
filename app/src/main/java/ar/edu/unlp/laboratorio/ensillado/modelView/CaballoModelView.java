@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
 import ar.edu.unlp.laboratorio.ensillado.activity.MainActivity;
+import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 
 /**
@@ -29,6 +30,29 @@ public class CaballoModelView {
         this.context = context;
         this.bindedImageResource = image;
         this.bindedImageResource.setOnDragListener(new SoltarElementoEnCaballoListener());
+        this.bindedImageResource.setOnClickListener(new SoltarElementoClickeadoEnCaballoListener());
+    }
+
+    public static RespuestaIntentoEnsillado handlerElementoCaballoSelection(MainActivity context,
+                                                                            ElementoCaballoModelView resource) {
+        RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
+                (resource.getElementoActual());
+        context.procesarRespuestaDeJuego(respuesta);
+        ElementosMostradosModelView.elementoArrastradoActualmente = null;
+        return respuesta;
+    }
+
+    public class SoltarElementoClickeadoEnCaballoListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (ElementosMostradosModelView.elementoArrastradoActualmente != null) {
+                handlerElementoCaballoSelection(context,
+                        ElementosMostradosModelView.elementoArrastradoActualmente);
+            } else {
+                context.mostrarMensajeInformativo("No se ha seleccionado ningún elemento.");
+            }
+        }
     }
 
     public class SoltarElementoEnCaballoListener implements View.OnDragListener {
@@ -37,24 +61,32 @@ public class CaballoModelView {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             int action = event.getAction();
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
-                case DragEvent.ACTION_DROP:
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    RespuestaIntentoEnsillado respuesta = ElementosMostradosModelView.handlerElementoCaballoSelection(context, ElementosMostradosModelView.elementoArrastradoActualmente);
-                    return respuesta.equals(RespuestaIntentoEnsillado.OK);
-                default:
-                    break;
+            if (ElementosMostradosModelView.elementoArrastradoActualmente != null) {
+                switch (event.getAction()) {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        RespuestaIntentoEnsillado respuesta =
+                                handlerElementoCaballoSelection(context, ElementosMostradosModelView
+                                        .elementoArrastradoActualmente);
+                        return respuesta.equals(RespuestaIntentoEnsillado.OK);
+                    default:
+                        break;
+                }
+                return false;
+            } else {
+                context.mostrarMensajeInformativo("No se ha seleccionado ningún elemento.");
+                return false;
             }
-            return false;
         }
     }
+
 
     public void render(Renderizable renderObject) {
         renderObject.render();

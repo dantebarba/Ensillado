@@ -11,13 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -38,7 +35,8 @@ import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementosMostradosModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity implements SharedPreferences
+        .OnSharedPreferenceChangeListener {
 
     CaballoModelView caballoModelView;
     ElementosMostradosModelView elementoMostradoView;
@@ -52,14 +50,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         myPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         myPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -87,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Configuracion configuracion = Configuracion.getDefaultConfiguration();
         if (prefs != null) {
             configuracion.nivelDeJuego = NivelEnum.fromString(prefs.getString("nivel", "FACIL"));
-            configuracion.estadoInicial = EstadoInicial.fromString(prefs.getString("estado_inicial", "DESNUDO"));
+            configuracion.estadoInicial = EstadoInicial.fromString(prefs.getString
+                    ("estado_inicial", "DESNUDO"));
             configuracion.voz = AudioSet.fromString(prefs.getString("voz", "MASCULINO"));
         }
         GameFactory.newInstance(configuracion);
@@ -127,11 +118,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_PRESENTE)) {
             tocarAudio(R.raw.resoplido);
-            mostrarMensajeInformativo("El elemento ingresado ya se encuentra presente en el caballo.");
+            mostrarMensajeInformativo("El elemento ingresado ya se encuentra presente en el " +
+                    "caballo.");
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.FINALIZADO)) {
             tocarAudio(R.raw.relincho);
-            mostrarMensajeFinalizado("Felicitaciones!, ha ganado!. Para volver a jugar haga click en " +
+            mostrarMensajeFinalizado("Felicitaciones!, ha ganado!. Para volver a jugar haga click" +
+                    " en " +
                     "reiniciar.");
             actualizarCaballo(GameFactory.getInstance());
         }
@@ -153,6 +146,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     public void reiniciarJuego() {
         this.cargarConfiguracion();
+        GameFactory.getInstance().reiniciar();
+        GameFactory.getInstance().comenzar();
+        this.actualizarCaballo(GameFactory.getInstance());
+        this.actualizarElementosMostrados(GameFactory.getInstance());
+    }
+
+    public void reiniciarJuegoSinCargarConfiguracion() {
         GameFactory.getInstance().reiniciar();
         GameFactory.getInstance().comenzar();
         this.actualizarCaballo(GameFactory.getInstance());
@@ -229,8 +229,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "SIGUIENTE NIVEL",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        GameFactory.getInstance().getConfiguracion().nivelDeJuego = GameFactory.getInstance().getConfiguracion().nivelDeJuego.siguienteNivel();
-                        reiniciarJuego();
+                        GameFactory.getInstance().getConfiguracion().nivelDeJuego = GameFactory
+                                .getInstance().getConfiguracion().nivelDeJuego.siguienteNivel();
+                        reiniciarJuegoSinCargarConfiguracion();
+                        setTitle("Ensillado: Nivel " + GameFactory.getInstance().getConfiguracion
+                                ().nivelDeJuego);
                         dialog.dismiss();
                     }
                 });
@@ -267,8 +270,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         try {
             // FIXME LA UNICA FORMA QUE ECONTRE PARA HACER
             // QUE REPRODUZCA DOS SONIDOS A LA VEZ CONSECUTIVOS.
-            while (myPlayer.isPlaying()) {
-            }
+
             myPlayer.reset();
             myPlayer.setDataSource(this, Uri.parse("android.resource://ar.edu.unlp" +
                     ".laboratorio.ensillado/" + audioResource));

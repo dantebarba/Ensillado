@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import ar.edu.unlp.laboratorio.ensillado.activity.MainActivity;
-import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
-import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 
 /**
  * Created by dbarba on 09/02/17.
@@ -23,7 +21,7 @@ public class ElementosMostradosModelView {
     public Map<ImageView, ElementoCaballoModelView> bindedResources = new HashMap<ImageView,
             ElementoCaballoModelView>();
 
-    public static ElementoCaballoModelView elementoArrastradoActualmente;
+    public static ElementoCaballoModelView elementoArrastradoActualmente = null;
 
     public static ElementosMostradosModelView nuevaPantallaDeElementos
             (MainActivity mainActivity, List<ImageView> resources) {
@@ -45,12 +43,17 @@ public class ElementosMostradosModelView {
     private void assignHandler(final ImageView aResource) {
         aResource.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View view) {
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-                        view);
-                view.startDrag(data, shadowBuilder, view, 0);
-                ElementosMostradosModelView.elementoArrastradoActualmente = bindedResources.get(aResource);
-                return true;
+                if (aResource != null && aResource.isEnabled()) {
+                    ClipData data = ClipData.newPlainText("", "");
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+                            view);
+                    view.startDrag(data, shadowBuilder, view, 0);
+                    ElementosMostradosModelView.elementoArrastradoActualmente = bindedResources.get
+                            (aResource);
+                    context.tocarAudio(bindedResources.get(aResource).getAudioResource());
+                    return true;
+                }
+                return false;
             }
         });
         aResource.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +63,7 @@ public class ElementosMostradosModelView {
                 // SI LA IMAGEN ESTA HABILITADA/CARGADA, entonces ES VALIDA, y TIENE CONTENIDO
                 // ENVIAMOS EL ELEMENTOCABALLO CORRESPONDIENTE A LA IMAGEN POR PARAMETRO
                 if (aResource != null && aResource.isEnabled()) {
-                    context.vibrar(500);
-                    // este codigo es común para arrastre también.
-                    handlerElementoCaballoSelection(context, bindedResources.get(aResource));
+                    handleElementoCaballoClick(aResource);
                 }
 
 
@@ -70,13 +71,13 @@ public class ElementosMostradosModelView {
         });
     }
 
-    public static RespuestaIntentoEnsillado handlerElementoCaballoSelection(MainActivity context, ElementoCaballoModelView resource) {
-        context.tocarAudio(resource.getAudioResource());
-        RespuestaIntentoEnsillado respuesta = GameFactory.getInstance().ensillar
-                (resource.getElementoActual());
-        context.procesarRespuestaDeJuego(respuesta);
-        return respuesta;
+    private void handleElementoCaballoClick(ImageView aResource) {
+        context.vibrar(500);
+        context.tocarAudio(bindedResources.get(aResource).getAudioResource());
+        ElementosMostradosModelView.elementoArrastradoActualmente = bindedResources.get
+                (aResource);
     }
+
 
     public void bind(ElementoCaballo[] elementosArray) {
         List<ImageView> imagenesAProcesar = new ArrayList<ImageView>(this
@@ -99,6 +100,7 @@ public class ElementosMostradosModelView {
 
 
     public void reset() {
+        ElementosMostradosModelView.elementoArrastradoActualmente = null;
         for (ImageView key : this.bindedResources.keySet()) {
             this.bindedResources.put(key, new ElementoCaballoModelView(key));
         }
