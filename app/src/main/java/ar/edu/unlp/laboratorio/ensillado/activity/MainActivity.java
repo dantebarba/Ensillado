@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_INCORRECTO)) {
             tocarAudio(R.raw.resoplido);
-            mostrarMensajeInformativo("El elemento ingresado no es correcto. Intente nuevamente.");
         }
         if (respuesta.equals(RespuestaIntentoEnsillado.ELEMENTO_PRESENTE)) {
             tocarAudio(R.raw.resoplido);

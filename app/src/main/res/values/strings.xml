@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ensillado</string>
+    <string name="app_name">EnsilladoBarbaGreenhill</string>
     <string name="action_settings">Configuracion</string>
     <string name="title_activity_preferences">ConfiguracionP</string>
     <string name="nombre_usuario">Usuario</string>
