@@ -19,4 +19,16 @@ public enum AudioSet {
         return null;
     }
 
+    public String toString() {
+        switch (this) {
+
+            case FEMENINO:
+                return "Femenino";
+            case MASCULINO:
+                return "Masculino";
+
+        }
+        return "Ninguno";
+    }
+
 }

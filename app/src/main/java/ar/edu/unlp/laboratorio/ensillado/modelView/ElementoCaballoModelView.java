@@ -4,8 +4,6 @@ package ar.edu.unlp.laboratorio.ensillado.modelView;
  * Created by CM690II on 03/02/2017.
  */
 
-import android.widget.ImageView;
-
 import ar.edu.unlp.laboratorio.ar.laboratorio.R;
 import ar.edu.unlp.laboratorio.ensillado.factory.GameFactory;
 import ar.edu.unlp.laboratorio.ensillado.model.AudioSet;
@@ -22,15 +20,16 @@ public class ElementoCaballoModelView {
     public static int BOZAL = R.drawable.bozal;
     public static int MONTURA = R.drawable.montura;
     public static int SUDADERA = R.drawable.sudadera;
-    public ImageView bindedResource;
+    public ImagenYTexto bindedResource;
     public ElementoCaballo elementoActual;
 
-    public ElementoCaballoModelView(ImageView viewById) {
+    public ElementoCaballoModelView(ImagenYTexto viewById) {
         if (viewById != null) {
             this.bindedResource = viewById;
-            this.bindedResource.setImageResource(android.R.drawable
+            this.bindedResource.imagen.setImageResource(android.R.drawable
                     .screen_background_light_transparent);
-            this.bindedResource.setEnabled(false);
+            this.bindedResource.texto.setText("");
+            this.bindedResource.imagen.setEnabled(false);
             this.elementoActual = ElementoCaballo.NINGUNO;
         }
     }
@@ -49,7 +48,7 @@ public class ElementoCaballoModelView {
     public void bind(ElementoCaballo elemento) {
         if (bindedResource != null && elemento != null) {
             this.setImageResource(elemento);
-            this.bindedResource.setEnabled(true);
+            this.bindedResource.imagen.setEnabled(true);
             this.setElementoActual(elemento);
         }
     }
@@ -58,26 +57,33 @@ public class ElementoCaballoModelView {
         switch (elemento) {
 
             case NINGUNO:
-                bindedResource.setImageResource(android.R.drawable
+                bindedResource.imagen.setImageResource(android.R.drawable
                         .screen_background_light_transparent);
+                bindedResource.texto.setText(ElementoCaballo.NINGUNO.toString());
                 break;
             case CABEZADA:
-                bindedResource.setImageResource(R.drawable.cabezada);
+                bindedResource.imagen.setImageResource(R.drawable.cabezada);
+                bindedResource.texto.setText(ElementoCaballo.CABEZADA.toString());
                 break;
             case BOZAL:
-                bindedResource.setImageResource(R.drawable.bozal);
+                bindedResource.imagen.setImageResource(R.drawable.bozal);
+                bindedResource.texto.setText(ElementoCaballo.BOZAL.toString());
                 break;
             case SUDADERA:
-                bindedResource.setImageResource(R.drawable.sudadera);
+                bindedResource.imagen.setImageResource(R.drawable.sudadera);
+                bindedResource.texto.setText(ElementoCaballo.SUDADERA.toString());
                 break;
             case MATRA:
-                bindedResource.setImageResource(R.drawable.matra);
+                bindedResource.imagen.setImageResource(R.drawable.matra);
+                bindedResource.texto.setText(ElementoCaballo.MATRA.toString());
                 break;
             case BAJO_MONTURA:
-                bindedResource.setImageResource(R.drawable.bajomontura);
+                bindedResource.imagen.setImageResource(R.drawable.bajomontura);
+                bindedResource.texto.setText(ElementoCaballo.BAJO_MONTURA.toString());
                 break;
             case MONTURA_ESTRIBOS:
-                bindedResource.setImageResource(R.drawable.montura);
+                bindedResource.imagen.setImageResource(R.drawable.montura);
+                bindedResource.texto.setText(ElementoCaballo.MONTURA_ESTRIBOS.toString());
                 break;
         }
     }

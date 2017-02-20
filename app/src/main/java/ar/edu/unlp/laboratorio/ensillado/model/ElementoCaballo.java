@@ -71,5 +71,27 @@ public enum ElementoCaballo {
         return ElementoCaballo.NINGUNO;
     }
 
+    public String toString() {
+        switch (this) {
+
+            case NINGUNO:
+                return "Ningun elemento";
+            case CABEZADA:
+                return "Cabezada";
+            case BOZAL:
+                return "Bozal";
+            case SUDADERA:
+                return "Sudadera";
+            case MATRA:
+                return "Matra";
+
+            case BAJO_MONTURA:
+                return "Bajo Montura";
+            case MONTURA_ESTRIBOS:
+                return "Montura";
+        }
+        return "";
+    }
+
 
 }

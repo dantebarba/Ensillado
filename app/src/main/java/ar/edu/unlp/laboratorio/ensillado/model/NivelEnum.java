@@ -34,4 +34,19 @@ public enum NivelEnum {
         return null;
     }
 
+    public String toString() {
+        switch (this) {
+
+            case FACIL:
+                return "Fácil";
+            case MEDIO:
+                return "Medio";
+            case AVANZADO:
+                return "Avanzado";
+            case EXPERTO:
+                return "Experto";
+        }
+        return "";
+    }
+
 }

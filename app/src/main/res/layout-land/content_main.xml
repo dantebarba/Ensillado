@@ -3,6 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/content_main"
+                android:background="@drawable/cedicabackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/activity_vertical_margin"
@@ -15,8 +16,8 @@
 
     <ImageView
         android:src="@android:drawable/screen_background_light_transparent"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:id="@+id/elemento_mostrado"
         android:layout_marginStart="33dp"
@@ -24,8 +25,8 @@
         android:layout_alignParentStart="true"/>
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
         android:id="@+id/elemento_mostrado5"
@@ -34,8 +35,8 @@
         android:layout_marginBottom="81dp" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
         android:id="@+id/elemento_mostrado2"
@@ -45,8 +46,8 @@
         android:layout_marginTop="80dp" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
         android:id="@+id/elemento_mostrado6"
@@ -67,8 +68,8 @@
         android:layout_marginStart="163dp" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
         android:id="@+id/elemento_mostrado4"
@@ -77,12 +78,56 @@
         android:layout_marginEnd="115dp" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitXY"
         android:src="@android:drawable/screen_background_light_transparent"
         android:id="@+id/elemento_mostrado3"
         android:layout_alignTop="@+id/elemento_mostrado2"
         android:layout_alignStart="@+id/elemento_mostrado4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado2"
+        android:layout_toStartOf="@+id/imagen_caballo"
+        android:layout_marginEnd="29dp"
+        android:id="@+id/texto_elemento2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado"
+        android:layout_alignEnd="@+id/texto_elemento2"
+        android:id="@+id/texto_elemento"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado4"
+        android:layout_alignEnd="@+id/texto_elemento3"
+        android:id="@+id/texto_elemento4"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado6"
+        android:layout_alignEnd="@+id/texto_elemento4"
+        android:id="@+id/texto_elemento6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado3"
+        android:layout_alignEnd="@+id/elemento_mostrado3"
+        android:layout_marginEnd="24dp"
+        android:id="@+id/texto_elemento3"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/elemento_mostrado6"
+        android:layout_alignEnd="@+id/texto_elemento"
+        android:id="@+id/texto_elemento5"/>
 
 </RelativeLayout>

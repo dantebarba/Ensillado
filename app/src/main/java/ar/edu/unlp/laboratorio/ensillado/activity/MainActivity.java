@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import ar.edu.unlp.laboratorio.ensillado.model.NivelEnum;
 import ar.edu.unlp.laboratorio.ensillado.model.RespuestaIntentoEnsillado;
 import ar.edu.unlp.laboratorio.ensillado.modelView.CaballoModelView;
 import ar.edu.unlp.laboratorio.ensillado.modelView.ElementosMostradosModelView;
+import ar.edu.unlp.laboratorio.ensillado.modelView.ImagenYTexto;
 import ar.edu.unlp.laboratorio.ensillado.modelView.Renderizable;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences
@@ -76,32 +78,38 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         prefs.registerOnSharedPreferenceChangeListener(this);
         Configuracion configuracion = Configuracion.getDefaultConfiguration();
         if (prefs != null) {
-            configuracion.nivelDeJuego = NivelEnum.fromString(prefs.getString("nivel", "FACIL"));
+            configuracion.nivelDeJuego = NivelEnum.fromString(prefs.getString("nivel", NivelEnum.FACIL.toString()));
             configuracion.estadoInicial = EstadoInicial.fromString(prefs.getString
-                    ("estado_inicial", "DESNUDO"));
-            configuracion.voz = AudioSet.fromString(prefs.getString("voz", "MASCULINO"));
+                    ("estado_inicial", EstadoInicial.DESNUDO.toString()));
+            configuracion.voz = AudioSet.fromString(prefs.getString("voz", AudioSet.MASCULINO.toString()));
         }
         GameFactory.newInstance(configuracion);
         setTitle("Ensillado: Nivel " + configuracion.nivelDeJuego);
     }
 
-    private List<ImageView> getElementosMostradosImageView() {
-        List<ImageView> elementosMostrados = new ArrayList<>();
-        ImageView elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado);
+    private List<ImagenYTexto> getElementosMostradosImageView() {
+        List<ImagenYTexto> elementosMostrados = new ArrayList<ImagenYTexto>();
+        ImagenYTexto elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id
+                .elemento_mostrado), (TextView) findViewById(R.id.texto_elemento));
         elementosMostrados.add(elementoMostrado);
-        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado2);
-        elementosMostrados.add(elementoMostrado);
-
-        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado3);
-        elementosMostrados.add(elementoMostrado);
-
-        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado4);
+        elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id.elemento_mostrado2),
+                (TextView) findViewById(R.id.texto_elemento2));
         elementosMostrados.add(elementoMostrado);
 
-        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado5);
+        elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id.elemento_mostrado3),
+                (TextView) findViewById(R.id.texto_elemento3));
         elementosMostrados.add(elementoMostrado);
 
-        elementoMostrado = (ImageView) findViewById(R.id.elemento_mostrado6);
+        elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id.elemento_mostrado4),
+                (TextView) findViewById(R.id.texto_elemento4));
+        elementosMostrados.add(elementoMostrado);
+
+        elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id.elemento_mostrado5),
+                (TextView) findViewById(R.id.texto_elemento5));
+        elementosMostrados.add(elementoMostrado);
+
+        elementoMostrado = new ImagenYTexto((ImageView) findViewById(R.id.elemento_mostrado6),
+                (TextView) findViewById(R.id.texto_elemento6));
         elementosMostrados.add(elementoMostrado);
 
         return elementosMostrados;

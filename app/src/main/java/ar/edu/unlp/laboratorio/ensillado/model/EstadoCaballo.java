@@ -57,4 +57,5 @@ public class EstadoCaballo {
         }
         return ElementoCaballo.NINGUNO;
     }
+
 }

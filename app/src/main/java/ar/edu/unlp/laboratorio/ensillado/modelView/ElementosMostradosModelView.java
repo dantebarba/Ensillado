@@ -18,13 +18,13 @@ import ar.edu.unlp.laboratorio.ensillado.model.ElementoCaballo;
 public class ElementosMostradosModelView {
 
     public MainActivity context;
-    public Map<ImageView, ElementoCaballoModelView> bindedResources = new HashMap<ImageView,
+    public Map<ImagenYTexto, ElementoCaballoModelView> bindedResources = new HashMap<ImagenYTexto,
             ElementoCaballoModelView>();
 
     public static ElementoCaballoModelView elementoArrastradoActualmente = null;
 
     public static ElementosMostradosModelView nuevaPantallaDeElementos
-            (MainActivity mainActivity, List<ImageView> resources) {
+            (MainActivity mainActivity, List<ImagenYTexto> resources) {
         ElementosMostradosModelView elementosMostrados = new
                 ElementosMostradosModelView();
         elementosMostrados.context = mainActivity;
@@ -32,18 +32,18 @@ public class ElementosMostradosModelView {
         return elementosMostrados;
     }
 
-    public void bindAllResources(List<ImageView> resources) {
-        for (ImageView aResource : resources) {
+    public void bindAllResources(List<ImagenYTexto> resources) {
+        for (ImagenYTexto aResource : resources) {
             this.bindedResources.put(aResource, new ElementoCaballoModelView(aResource));
             this.assignHandler(aResource);
         }
 
     }
 
-    private void assignHandler(final ImageView aResource) {
-        aResource.setOnLongClickListener(new View.OnLongClickListener() {
+    private void assignHandler(final ImagenYTexto aResource) {
+        aResource.imagen.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View view) {
-                if (aResource != null && aResource.isEnabled()) {
+                if (aResource != null && aResource.imagen.isEnabled()) {
                     ClipData data = ClipData.newPlainText("", "");
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
                             view);
@@ -56,13 +56,13 @@ public class ElementosMostradosModelView {
                 return false;
             }
         });
-        aResource.setOnClickListener(new View.OnClickListener() {
+        aResource.imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // SI LA IMAGEN ESTA HABILITADA/CARGADA, entonces ES VALIDA, y TIENE CONTENIDO
                 // ENVIAMOS EL ELEMENTOCABALLO CORRESPONDIENTE A LA IMAGEN POR PARAMETRO
-                if (aResource != null && aResource.isEnabled()) {
+                if (aResource != null && aResource.imagen.isEnabled()) {
                     handleElementoCaballoClick(aResource);
                 }
 
@@ -71,7 +71,7 @@ public class ElementosMostradosModelView {
         });
     }
 
-    private void handleElementoCaballoClick(ImageView aResource) {
+    private void handleElementoCaballoClick(ImagenYTexto aResource) {
         context.vibrar(500);
         context.tocarAudio(bindedResources.get(aResource).getAudioResource());
         ElementosMostradosModelView.elementoArrastradoActualmente = bindedResources.get
@@ -80,10 +80,10 @@ public class ElementosMostradosModelView {
 
 
     public void bind(ElementoCaballo[] elementosArray) {
-        List<ImageView> imagenesAProcesar = new ArrayList<ImageView>(this
+        List<ImagenYTexto> imagenesAProcesar = new ArrayList<ImagenYTexto>(this
                 .bindedResources.keySet());
         for (int i = 0; i < elementosArray.length; i++) {
-            ImageView imagenActual = imagenesAProcesar.get(i);
+            ImagenYTexto imagenActual = imagenesAProcesar.get(i);
             ElementoCaballoModelView elementoViewActual = new
                     ElementoCaballoModelView(imagenActual);
             // ASOCIAMOS LA RESPECTIVA IMAGEN CON EL ELEMENTO
@@ -101,7 +101,7 @@ public class ElementosMostradosModelView {
 
     public void reset() {
         ElementosMostradosModelView.elementoArrastradoActualmente = null;
-        for (ImageView key : this.bindedResources.keySet()) {
+        for (ImagenYTexto key : this.bindedResources.keySet()) {
             this.bindedResources.put(key, new ElementoCaballoModelView(key));
         }
     }

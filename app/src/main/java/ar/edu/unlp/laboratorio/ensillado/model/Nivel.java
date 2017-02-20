@@ -86,4 +86,5 @@ public class Nivel {
     public NivelEnum getNivel() {
         return nivel;
     }
+
 }

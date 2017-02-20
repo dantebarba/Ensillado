@@ -41,4 +41,14 @@ public enum EstadoInicial {
         }
         return null;
     }
+
+    public String toString() {
+        switch (this) {
+            case DESNUDO:
+                return "Sin elementos";
+            case CON_ELEMENTOS:
+                return "Con elementos";
+        }
+        return "";
+    }
 }
